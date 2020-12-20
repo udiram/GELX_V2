@@ -14,27 +14,30 @@ import com.gelx.gelx_v2.models.ImageData;
 import com.gelx.gelx_v2.reposotories.DataProvider;
 
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
 public class HomeViewModel extends ViewModel {
 
-    public void sendImageToServer(Context context, Drawable drawable) {
+    public void sendImageDataToServer(Context context, Drawable drawable) throws UnsupportedEncodingException {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
         String imageString = Base64.encodeToString(imageBytes, Base64.URL_SAFE);
+
 
         final Random numRandom = new Random();
 
         int job_id = numRandom.nextInt(10000);
+
 
         ImageData imageData = new ImageData();
         imageData.setJob_id(job_id);
         imageData.setImage(imageString);
 
 
-        DataProvider.sendImageToServer(context, imageData);
+        DataProvider.sendImageDataToServer(context, imageData);
     }
 }
