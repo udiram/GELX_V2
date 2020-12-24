@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.gelx.gelx_v2.R;
+import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
 import com.gelx.gelx_v2.models.XY;
 import com.gelx.gelx_v2.reposotories.DataProvider;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
@@ -35,6 +37,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private PhotoView uploadImg;
     private Button sendDataBtn;
+    private ProgressBar spinner;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +58,8 @@ public class HomeFragment extends Fragment {
             }
         });
         sendDataBtn = root.findViewById(R.id.sendDataBtn);
+        spinner = root.findViewById(R.id.spinner);
+        spinner.setVisibility(View.GONE);
         sendDataBtn.setVisibility(View.GONE);
 
         uploadBtn.setOnClickListener(new View.OnClickListener() {
@@ -71,15 +76,7 @@ public class HomeFragment extends Fragment {
 //                } catch (InterruptedException e) {
 //                    e.printStackTrace();
 //                }
-               Snackbar snackbar =  Snackbar.make(view, "please click on your ladders, followed by a column", Snackbar.LENGTH_INDEFINITE)
-                       .setAction("UNDO", new View.OnClickListener() {
-                           @Override
-                           public void onClick(View view) {
-                               DataProvider.clearDataList();
-                               sendDataBtn.setVisibility(View.GONE);
-                               uploadImg.setImageDrawable(null);
-                           }
-                       });                            snackbar.show();
+
 
 //                Toast.makeText(getContext(), "please click on your ladders, from right to left, followed by your column of interest", Toast.LENGTH_LONG).show();
             }
@@ -88,13 +85,40 @@ public class HomeFragment extends Fragment {
         sendDataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                spinner.setVisibility(View.VISIBLE);
                 try {
                     ColorMatrix matrix = new ColorMatrix();
                     matrix.setSaturation(0); // this just makes it look like grayscale
                     ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+
                     uploadImg.setColorFilter(filter);
-                    homeViewModel.sendImageDataToServer(getContext(), uploadImg.getDrawable());
-                    uploadImg.setImageDrawable(null);
+                    homeViewModel.sendImageDataToServer(getContext(), uploadImg.getDrawable(), new SendImageDataCallback(){
+                        @Override
+                        public void OnSuccess() {
+                            uploadImg.setImageDrawable(null);
+
+                            spinner.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void OnFailure() {
+
+                            Toast.makeText(getActivity(), "Server Error, Please try again later", Toast.LENGTH_LONG).show();
+
+                            spinner.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void OnEmptyData() {
+
+                            spinner.setVisibility(View.GONE);
+
+                            Toast.makeText(getActivity(), "please select your points", Toast.LENGTH_LONG).show();
+
+                        }
+                    });
 
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
@@ -118,6 +142,16 @@ public class HomeFragment extends Fragment {
             Uri selectedImageUri = data.getData();
             uploadImg.setImageURI(selectedImageUri);
 
+            Snackbar snackbar =  Snackbar.make(getView(), "please click on your ladders, followed by a column", Snackbar.LENGTH_LONG)
+                    .setAction("UNDO", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            DataProvider.clearDataList();
+                            sendDataBtn.setVisibility(View.GONE);
+                            uploadImg.setImageDrawable(null);
+                        }
+                    });
+            snackbar.show();
             sendDataBtn.setVisibility(View.VISIBLE);
         }
     }

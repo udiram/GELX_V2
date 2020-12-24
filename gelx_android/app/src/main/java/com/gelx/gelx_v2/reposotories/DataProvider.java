@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
 import com.gelx.gelx_v2.models.ImageData;
 import com.gelx.gelx_v2.models.XY;
 import com.google.gson.Gson;
@@ -29,6 +30,10 @@ public class DataProvider {
 
     private static List<XY> xyDataList = new ArrayList<>();
 
+    public static List<XY> getXyDataList() {
+        return xyDataList;
+    }
+
     public static void clearDataList() {
         xyDataList.clear();
     }
@@ -44,7 +49,7 @@ public class DataProvider {
             return false;
         }
     }
-    public static void sendImageDataToServer(Context context, final ImageData imageData) {
+    public static void sendImageDataToServer(Context context, final ImageData imageData, final SendImageDataCallback sendImageDataCallback) {
 
         imageData.setLadderPercents(xyDataList);
         final String jsonString = new Gson().toJson(imageData);
@@ -59,14 +64,15 @@ public class DataProvider {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         clearDataList();
+                        sendImageDataCallback.OnSuccess();
                         Log.i("Image Sent", response);
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                sendImageDataCallback.OnFailure();
                 Log.e("Image Sent", "error: " + error.getMessage());
             }
         }) {
