@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -46,9 +47,11 @@ public class DataProvider {
     public static void sendImageDataToServer(Context context, final ImageData imageData) {
 
         imageData.setLadderPercents(xyDataList);
-
         final String jsonString = new Gson().toJson(imageData);
         Log.i("JSON", jsonString);
+
+        final String xystring = new Gson().toJson(xyDataList);
+        Log.i("xy", xystring);
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -80,6 +83,10 @@ public class DataProvider {
             }
         };
         // Add the request to the RequestQueue.
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(stringRequest);
 
     }

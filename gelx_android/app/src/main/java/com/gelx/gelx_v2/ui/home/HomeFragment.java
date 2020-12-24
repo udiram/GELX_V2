@@ -5,6 +5,7 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +25,7 @@ import com.gelx.gelx_v2.models.XY;
 import com.gelx.gelx_v2.reposotories.DataProvider;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.UnsupportedEncodingException;
 
@@ -57,11 +60,28 @@ public class HomeFragment extends Fragment {
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                DataProvider.clearDataList();
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 galleryIntent.setType("image/*");
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+
+//                try {
+//                    Thread.sleep(2000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+               Snackbar snackbar =  Snackbar.make(view, "please click on your ladders, followed by a column", Snackbar.LENGTH_INDEFINITE)
+                       .setAction("UNDO", new View.OnClickListener() {
+                           @Override
+                           public void onClick(View view) {
+                               DataProvider.clearDataList();
+                               sendDataBtn.setVisibility(View.GONE);
+                               uploadImg.setImageDrawable(null);
+                           }
+                       });                            snackbar.show();
+
+//                Toast.makeText(getContext(), "please click on your ladders, from right to left, followed by your column of interest", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -73,8 +93,9 @@ public class HomeFragment extends Fragment {
                     matrix.setSaturation(0); // this just makes it look like grayscale
                     ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
                     uploadImg.setColorFilter(filter);
-
                     homeViewModel.sendImageDataToServer(getContext(), uploadImg.getDrawable());
+                    uploadImg.setImageDrawable(null);
+
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }

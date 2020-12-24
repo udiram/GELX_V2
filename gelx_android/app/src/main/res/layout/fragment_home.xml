@@ -16,7 +16,7 @@
 
     <Button
         android:id="@+id/sendDataBtn"
-        android:layout_width="203dp"
+        android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
@@ -27,11 +27,13 @@
 
     <Button
         android:id="@+id/uploadBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="202dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="65dp"
         android:background="@drawable/round_buttons"
         android:text="Select image for upload" />
+
+
 
 </RelativeLayout>
