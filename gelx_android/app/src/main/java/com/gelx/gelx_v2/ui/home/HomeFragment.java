@@ -55,6 +55,7 @@ public class HomeFragment extends Fragment {
                 data.x = x;
                 data.y = y;
                 DataProvider.addData(data);
+
             }
         });
         sendDataBtn = root.findViewById(R.id.sendDataBtn);
@@ -70,6 +71,8 @@ public class HomeFragment extends Fragment {
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 galleryIntent.setType("image/*");
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+                DataProvider.getXyDataList();
+
 
 //                try {
 //                    Thread.sleep(2000);
@@ -98,14 +101,16 @@ public class HomeFragment extends Fragment {
                         public void OnSuccess() {
                             uploadImg.setImageDrawable(null);
 
+                            Toast.makeText(getActivity(), "Data Processed successfully, please check your email!", Toast.LENGTH_LONG).show();
+
                             spinner.setVisibility(View.GONE);
                         }
 
                         @Override
                         public void OnFailure() {
 
-                            Toast.makeText(getActivity(), "Server Error, Please try again later", Toast.LENGTH_LONG).show();
-
+                            Toast.makeText(getActivity(), "Server Error, Please check points or try again later", Toast.LENGTH_LONG).show();
+                            DataProvider.clearDataList();
                             spinner.setVisibility(View.GONE);
 
                         }
