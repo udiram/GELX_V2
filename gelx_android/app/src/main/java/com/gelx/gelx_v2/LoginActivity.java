@@ -4,10 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
+import com.gelx.gelx_v2.models.ImageData;
+import com.gelx.gelx_v2.reposotories.DataProvider;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -36,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
 
+        Button signUpLoginBtn = findViewById(R.id.sign_up);
+
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,6 +50,15 @@ public class LoginActivity extends AppCompatActivity {
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
+
+        findViewById(R.id.sign_up).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent signuploginIntent = new Intent(LoginActivity.this, ManualRegistrationActivity.class);
+                startActivity(signuploginIntent);
+            }
+        });
+
     }
 
     @Override
@@ -78,10 +94,31 @@ public class LoginActivity extends AppCompatActivity {
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
+            final GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            ImageData imageData = new ImageData();
+            imageData.setUsername(account.getGivenName());
+            imageData.setPassword(account.getFamilyName());
             // Signed in successfully, show authenticated UI.
-            updateUI(account);
+            DataProvider.sendUserRegistrationToServer(LoginActivity.this, imageData, new SendImageDataCallback() {
+                @Override
+                public void OnSuccess() {
+                    updateUI(account);
+                    Toast.makeText(LoginActivity.this, "Account Created successfully, please check your email!", Toast.LENGTH_LONG).show();
+
+                }
+
+                @Override
+                public void OnFailure() {
+                    Toast.makeText(LoginActivity.this, "Server Error, could not create new user profile", Toast.LENGTH_LONG).show();
+
+                }
+
+                @Override
+                public void OnEmptyData() {
+                    Toast.makeText(LoginActivity.this, "please Register", Toast.LENGTH_LONG).show();
+
+                }
+            });
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.

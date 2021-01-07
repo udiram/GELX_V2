@@ -27,6 +27,7 @@ import com.gelx.gelx_v2.models.XY;
 import com.gelx.gelx_v2.reposotories.DataProvider;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.UnsupportedEncodingException;
@@ -62,7 +63,6 @@ public class HomeFragment extends Fragment {
         spinner = root.findViewById(R.id.spinner);
         spinner.setVisibility(View.GONE);
         sendDataBtn.setVisibility(View.GONE);
-
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

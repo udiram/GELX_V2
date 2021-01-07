@@ -1,5 +1,7 @@
 package com.gelx.gelx_v2.models;
 
+import androidx.annotation.VisibleForTesting;
+
 import java.util.List;
 
 public class ImageData {
@@ -8,9 +10,30 @@ public class ImageData {
     private String image;
     private List<XY> ladderPercents;
     private String email;
-    private String fname;
+    private String username;
     private String lname;
+    private String fname;
     private String user_id;
+    private String password;
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 
 
     public String getUser_id() {
@@ -30,12 +53,12 @@ public class ImageData {
         this.email = email;
     }
 
-    public String getFname() {
-        return fname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getLname() {

@@ -5,26 +5,31 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.util.Base64;
-import android.widget.Toast;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.gelx.gelx_v2.PermanentStorage;
 import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
 import com.gelx.gelx_v2.models.ImageData;
 import com.gelx.gelx_v2.reposotories.DataProvider;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
 public class HomeViewModel extends ViewModel {
+
+    public void sendUserRegistrationToServer(Context context, String string, SendImageDataCallback sendImageDataCallback) throws UnsupportedEncodingException{
+        ImageData imageData = new ImageData();
+        imageData.setUsername(PermanentStorage.GOOGLE_GIVEN_NAME_KEY);
+        imageData.setPassword(PermanentStorage.PASSWORD_KEY);
+
+
+        DataProvider.sendUserRegistrationToServer(context, imageData, sendImageDataCallback);
+    }
 
     public void sendImageDataToServer(Context context, Drawable drawable, SendImageDataCallback sendImageDataCallback) throws UnsupportedEncodingException {
 
@@ -58,10 +63,19 @@ public class HomeViewModel extends ViewModel {
             String personId = acct.getId();
             Uri personPhoto = acct.getPhotoUrl();
 
-            imageData.setFname(personGivenName);
+            PermanentStorage.getInstance().storeString(context, PermanentStorage.GOOGLE_GIVEN_NAME_KEY, personGivenName );
+//            imageData.setUsername(personGivenName);
             imageData.setEmail(personEmail);
             imageData.setLname(personFamilyName);
             imageData.setUser_id(personId);
+            imageData.setFname(personGivenName);
+        }else{
+            imageData.setEmail(PermanentStorage.getInstance().retrieveString(context, PermanentStorage.EMAIL_KEY));
+            imageData.setFname(PermanentStorage.getInstance().retrieveString(context, PermanentStorage.GOOGLE_GIVEN_NAME_KEY));
+            imageData.setLname(PermanentStorage.getInstance().retrieveString(context, PermanentStorage.GOOGLE_FAMILY_NAME_KEY));
+            imageData.setUser_id(PermanentStorage.getInstance().retrieveString(context, PermanentStorage.ACCOUNT_ID_KEY));
+
+
         }
 
 
