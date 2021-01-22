@@ -6,41 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <Button
+        android:id="@+id/sign_up"
+        android:layout_width="124dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="172dp"
+        android:background="@drawable/round_buttons"
+        android:text="sign up/login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
-        android:layout_width="130dp"
-        android:layout_height="38dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toTopOf="@+id/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.589" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="396dp"
         android:layout_height="347dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="11dp"
-        app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
 
-    <Button
-        android:id="@+id/sign_up"
-        android:layout_width="124dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="166dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="157dp"
-        android:layout_marginBottom="284dp"
-        android:background="@drawable/round_buttons"
-        android:text="sign up/login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.595"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
+        app:srcCompat="@drawable/logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

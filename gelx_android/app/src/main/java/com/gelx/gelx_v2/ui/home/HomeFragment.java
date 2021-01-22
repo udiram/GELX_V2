@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ import com.gelx.gelx_v2.models.XY;
 import com.gelx.gelx_v2.reposotories.DataProvider;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -38,7 +40,8 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private PhotoView uploadImg;
     private Button sendDataBtn;
-    private ProgressBar spinner;
+    private TextView instructionsTxt;
+    private SpinKitView spinner;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +66,7 @@ public class HomeFragment extends Fragment {
         spinner = root.findViewById(R.id.spinner);
         spinner.setVisibility(View.GONE);
         sendDataBtn.setVisibility(View.GONE);
+        instructionsTxt = root.findViewById(R.id.instructions);
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,6 +104,8 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void OnSuccess() {
                             uploadImg.setImageDrawable(null);
+
+                            instructionsTxt.setVisibility(View.VISIBLE);
 
                             Toast.makeText(getActivity(), "Data Processed successfully, please check your email!", Toast.LENGTH_LONG).show();
 
@@ -158,6 +164,7 @@ public class HomeFragment extends Fragment {
                     });
             snackbar.show();
             sendDataBtn.setVisibility(View.VISIBLE);
+            instructionsTxt.setVisibility(View.GONE);
         }
     }
 

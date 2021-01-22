@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
-    
+
 
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/uploadedImageView"
@@ -13,12 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <ProgressBar
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/spinner"
+        style="@style/SpinKitView.Large.Wave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        app:SpinKit_Color="@color/colorAccent" />
 
     <Button
         android:id="@+id/sendDataBtn"
@@ -27,7 +31,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="67dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="65dp"
         android:background="@drawable/round_buttons"
         android:text="Send Data for analysis!" />
 
@@ -37,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="65dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/round_buttons"
         android:text="Select image for upload" />
 
@@ -57,8 +63,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:text="Tap the Upload Image below button to get started!"
         android:textSize="25dp"
+        android:gravity="center_horizontal"
         android:textStyle="bold"
         android:translationZ="-1dp"
         app:layout_constraintBottom_toBottomOf="parent"
