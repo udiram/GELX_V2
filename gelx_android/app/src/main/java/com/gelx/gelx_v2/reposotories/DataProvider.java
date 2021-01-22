@@ -17,6 +17,10 @@ import com.gelx.gelx_v2.models.ImageData;
 import com.gelx.gelx_v2.models.XY;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +56,7 @@ public class DataProvider {
             return false;
         }
     }
-    public static void sendUserRegistrationToServer(Context context, final ImageData imageData, final SendImageDataCallback sendImageDataCallback){
+    public static void sendUserRegistrationToServer(final Context context, final ImageData imageData, final SendImageDataCallback sendImageDataCallback){
 
         final String userKey = PermanentStorage.getInstance().retrieveString(context, PermanentStorage.GOOGLE_GIVEN_NAME_KEY);
         Log.i("userkey", userKey);
@@ -81,14 +85,22 @@ public class DataProvider {
                     public void onResponse(String response) {
                         clearDataList();
                         sendImageDataCallback.OnSuccess();
-                        Log.i("Image Sent", response);
+                        Log.i("User Created", response);
+
+                        try {
+                            JSONObject responseJson = new JSONObject(response);
+                            int user_id = responseJson.getInt("user_id");
+//                            PermanentStorage.getInstance().storeInt(context, PermanentStorage.USER_ID_KEY, user_id);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 sendImageDataCallback.OnFailure();
-                Log.e("Image Sent", "error: " + error.getMessage());
+                Log.e("User Created", "error: " + error.getMessage());
             }
         }) {
             @Override
@@ -115,7 +127,7 @@ public class DataProvider {
 
 
 
-    public static void sendImageDataToServer(Context context, final ImageData imageData, final SendImageDataCallback sendImageDataCallback) {
+    public static void sendImageDataToServer(final Context context, final ImageData imageData, final SendImageDataCallback sendImageDataCallback) {
 
         imageData.setLadderPercents(xyDataList);
 
@@ -152,6 +164,7 @@ public class DataProvider {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("auth-key", "1234");
+//                params.put("user_id", PermanentStorage.getInstance().retrieveInt(context, PermanentStorage.USER_ID_KEY));
                 return params;
             }
         };

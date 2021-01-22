@@ -127,6 +127,8 @@ public class RegistrationFragment extends Fragment {
                         homeViewModel.sendUserRegistrationToServer(getActivity(), PermanentStorage.GOOGLE_GIVEN_NAME_KEY, new SendImageDataCallback() {
                             @Override
                             public void OnSuccess() {
+
+                                PermanentStorage.getInstance().storeString(getActivity(), PermanentStorage.ERROR_KEY, String.valueOf(PermanentStorage.ERROR_KEY.equals(null)));
                                 Toast.makeText(getActivity(), "Account Created successfully, please check your email!", Toast.LENGTH_LONG).show();
 
                             }
@@ -135,7 +137,8 @@ public class RegistrationFragment extends Fragment {
                             public void OnFailure() {
 
                                 Toast.makeText(getActivity(), "Server Error, could not create new user profile", Toast.LENGTH_LONG).show();
-
+                                PermanentStorage.getInstance().storeString(getActivity(), PermanentStorage.ERROR_KEY, "Error 500");
+                                Log.i("Failure", "500");
                             }
 
                             @Override
