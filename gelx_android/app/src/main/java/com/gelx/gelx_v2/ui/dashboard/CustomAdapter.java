@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.gelx.gelx_v2.BuildConfig;
 import com.gelx.gelx_v2.R;
+import com.gelx.gelx_v2.callbacks.SaveLadderDataCallback;
 import com.gelx.gelx_v2.models.LadderData;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     private static final String TAG = "CustomAdapter";
 
     protected static List<LadderData> mDataSet;
+    protected static SaveLadderDataCallback saveLDCallback;
 
     // BEGIN_INCLUDE(recyclerViewSampleViewHolder)
     /**
@@ -67,7 +69,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             ladderpointsET = (EditText) v.findViewById(R.id.ladderpointsET);
 
             saveLPBtn = (Button) v.findViewById(R.id.saveLPBtn);
+
                 saveLPBtn.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View view) {
                         String ladderPoints = ladderpointsET.getText().toString();
@@ -79,9 +83,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                         }
                         mDataSet.get(getAdapterPosition()).setLadderPoints(points);
                         mDataSet.get(getAdapterPosition()).setLadderPointsAsString(ladderPoints);
+
+                        saveLDCallback.onSavePressed(mDataSet);
                     }
                 });
         }
+
+
 
         public TextView getTextView() {
             return textView;
@@ -98,8 +106,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      *
      * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public CustomAdapter(List<LadderData> dataSet) {
+    public CustomAdapter(List<LadderData> dataSet, SaveLadderDataCallback saveLadderDataCallback) {
         mDataSet = dataSet;
+
+        saveLDCallback = saveLadderDataCallback;
+
     }
 
 

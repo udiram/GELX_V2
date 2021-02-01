@@ -19,6 +19,8 @@ public class PermanentStorage {
     public static final String GOOGLE_FAMILY_NAME_KEY = "gfamilyame";
     public static final String GOOGLE_ID_KEY = "gid";
     public static final String ERROR_KEY = "ERROR_KEY";
+    public static final String LADDER_KEY = "LADDER_KEY";
+
 
 
 

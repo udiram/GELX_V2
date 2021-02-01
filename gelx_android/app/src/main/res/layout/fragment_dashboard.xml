@@ -23,7 +23,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:contentDescription="add"
-        android:src="@drawable/logo"
+        android:src="@drawable/add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"
@@ -38,13 +38,13 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:contentDescription="add"
-        android:src="@drawable/logo"
+        android:src="@drawable/delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.041"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.915" />
+        app:layout_constraintVertical_bias="0.908" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

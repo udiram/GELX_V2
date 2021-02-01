@@ -4,21 +4,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gelx.gelx_v2.R;
+import com.gelx.gelx_v2.callbacks.SaveLadderDataCallback;
 import com.gelx.gelx_v2.models.LadderData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +31,7 @@ public class DashboardFragment extends Fragment {
     protected List<LadderData> mDataset;
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        // Initialize dataset, this data would usually come from a local content provider or
-        // remote server.
-        initDataset();
-    }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
@@ -56,14 +45,19 @@ public class DashboardFragment extends Fragment {
 //            }
 //        });
 
+        initDataset();
+
         FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDataset.add(new LadderData(mDataset.size(), null));
                 mAdapter.notifyDataSetChanged();
+
+
             }
         });
+
 
         FloatingActionButton fabdelete = root.findViewById(R.id.fabdelete);
         fabdelete.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +65,8 @@ public class DashboardFragment extends Fragment {
             public void onClick(View view) {
                 mDataset.remove(mDataset.size() - 1);
                 mAdapter.notifyDataSetChanged();
+
+                dashboardViewModel.saveLadderData(getActivity(), mDataset);
             }
         });
 
@@ -81,7 +77,13 @@ public class DashboardFragment extends Fragment {
         // elements are laid out.
         mLayoutManager = new LinearLayoutManager(getActivity());
 
-        mAdapter = new CustomAdapter(mDataset);
+        mAdapter = new CustomAdapter(mDataset, new SaveLadderDataCallback() {
+            @Override
+            public void onSavePressed(List<LadderData> ladderDataList) {
+                mDataset = ladderDataList;
+                dashboardViewModel.saveLadderData(getActivity(), ladderDataList);
+            }
+        });
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -93,9 +95,16 @@ public class DashboardFragment extends Fragment {
     }
 
     private void initDataset() {
-        mDataset = new ArrayList<LadderData>();
-        for (int i = 0; i < DATASET_COUNT; i++) {
-            mDataset.add(new LadderData(i, null) );
+//        mDataset = new ArrayList<LadderData>();
+//        for (int i = 0; i < DATASET_COUNT; i++) {
+//            mDataset.add(new LadderData(i, null) );
+//        }
+
+        mDataset = dashboardViewModel.retrieveLadderData(getActivity());
+
+        if(mDataset.isEmpty()){
+            mDataset.add(new LadderData(0, null) );
         }
+
     }
 }

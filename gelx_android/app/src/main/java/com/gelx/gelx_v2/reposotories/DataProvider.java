@@ -14,6 +14,7 @@ import com.android.volley.toolbox.Volley;
 import com.gelx.gelx_v2.PermanentStorage;
 import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
 import com.gelx.gelx_v2.models.ImageData;
+import com.gelx.gelx_v2.models.LadderData;
 import com.gelx.gelx_v2.models.XY;
 import com.google.gson.Gson;
 
@@ -32,6 +33,7 @@ public class DataProvider {
     private static final String SEND_IMAGE_URL = "http://10.0.2.2:8000/polls/image/";
     private static final String SEND_DATA_URL = "http://10.0.2.2:8000/polls/analysis/";
     private static final String USER_REG_URL = "http://10.0.2.2:8000/polls/user/";
+    private static final String LADDER_DATA_URL = "http://10.0.2.2:8000/polls/ladder/";
 
 
     private static List<XY> xyDataList = new ArrayList<>();
@@ -56,6 +58,50 @@ public class DataProvider {
             return false;
         }
     }
+
+    public static void sendLadderDataToServer(final Context context, final List<LadderData> ladderDataList){
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, LADDER_DATA_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("Ladder Data Sent", response);
+                    }
+                },
+                new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("Ladder Created", "error: " + error.getMessage());
+            }
+        }) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                String ladderString = new Gson().toJson(ladderDataList);
+
+                return ladderString.getBytes();
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("auth-key", "1234");
+                return params;
+            }
+        };
+        // Add the request to the RequestQueue.
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(stringRequest);
+
+    }
+
+
     public static void sendUserRegistrationToServer(final Context context, final ImageData imageData, final SendImageDataCallback sendImageDataCallback){
 
         final String userKey = PermanentStorage.getInstance().retrieveString(context, PermanentStorage.GOOGLE_GIVEN_NAME_KEY);
