@@ -12,12 +12,15 @@ import androidx.lifecycle.ViewModel;
 import com.gelx.gelx_v2.PermanentStorage;
 import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
 import com.gelx.gelx_v2.models.ImageData;
+import com.gelx.gelx_v2.models.LadderData;
 import com.gelx.gelx_v2.reposotories.DataProvider;
+import com.gelx.gelx_v2.ui.dashboard.DashboardViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Random;
 
 public class HomeViewModel extends ViewModel {
@@ -77,7 +80,9 @@ public class HomeViewModel extends ViewModel {
 
 
         }
+        List<LadderData> ladders = DashboardViewModel.retrieveLadderData(context);
 
+        imageData.setLadderData(ladders);
 
         DataProvider.sendImageDataToServer(context, imageData, sendImageDataCallback);
     }

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -67,6 +69,14 @@ public class DashboardFragment extends Fragment {
                 mAdapter.notifyDataSetChanged();
 
                 dashboardViewModel.saveLadderData(getActivity(), mDataset);
+            }
+        });
+
+        Button sendLadderBtn = root.findViewById(R.id.sendLadderBtn);
+        sendLadderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "BTN pressed", Toast.LENGTH_LONG).show();
             }
         });
 

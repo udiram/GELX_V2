@@ -15,6 +15,17 @@ public class ImageData {
     private String fname;
     private String user_id;
     private String password;
+    private List<LadderData> ladderData;
+
+
+    public List<LadderData> getLadderData() {
+        return ladderData;
+    }
+
+    public void setLadderData(List<LadderData> ladderData) {
+        this.ladderData = ladderData;
+    }
+
 
     public String getFname() {
         return fname;

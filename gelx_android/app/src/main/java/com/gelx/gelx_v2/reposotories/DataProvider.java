@@ -59,48 +59,6 @@ public class DataProvider {
         }
     }
 
-    public static void sendLadderDataToServer(final Context context, final List<LadderData> ladderDataList){
-
-        RequestQueue queue = Volley.newRequestQueue(context);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, LADDER_DATA_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("Ladder Data Sent", response);
-                    }
-                },
-                new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Log.e("Ladder Created", "error: " + error.getMessage());
-            }
-        }) {
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                String ladderString = new Gson().toJson(ladderDataList);
-
-                return ladderString.getBytes();
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("auth-key", "1234");
-                return params;
-            }
-        };
-        // Add the request to the RequestQueue.
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                0,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(stringRequest);
-
-    }
-
 
     public static void sendUserRegistrationToServer(final Context context, final ImageData imageData, final SendImageDataCallback sendImageDataCallback){
 

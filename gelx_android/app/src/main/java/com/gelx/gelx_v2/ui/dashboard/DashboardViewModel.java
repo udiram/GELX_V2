@@ -24,14 +24,14 @@ public class DashboardViewModel extends ViewModel {
         mText.setValue("This is dashboard fragment");
     }
 
-    public void saveLadderData(Context context, List<LadderData> ladderDataList){
+    public static void saveLadderData(Context context, List<LadderData> ladderDataList){
        String ladderString = new Gson().toJson(ladderDataList);
        PermanentStorage.getInstance().storeString(context, PermanentStorage.LADDER_KEY, ladderString);
 
         Log.i("ladderstore", ladderString);
     }
 
-    public List<LadderData> retrieveLadderData(Context context){
+    public static List<LadderData> retrieveLadderData(Context context){
         String ladderString = PermanentStorage.getInstance().retrieveString(context, PermanentStorage.LADDER_KEY);
         if (ladderString.isEmpty()){
             return new ArrayList<LadderData>();
