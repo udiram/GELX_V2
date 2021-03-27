@@ -33,7 +33,7 @@ public class ManualRegistrationActivity extends AppCompatActivity {
                 startActivity(menuActivity);
 //
             }else{
-                    Toast.makeText(this, "Server Error, could not create new user profile", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Secure Sign on Error, could not create new user profile", Toast.LENGTH_LONG).show();
                 Intent restart = new Intent(ManualRegistrationActivity.this, LoginActivity.class);
 //
                 startActivity(restart);
