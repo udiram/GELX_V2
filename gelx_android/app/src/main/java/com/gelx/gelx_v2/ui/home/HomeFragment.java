@@ -32,6 +32,9 @@ import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 
 public class HomeFragment extends Fragment {
@@ -44,7 +47,7 @@ public class HomeFragment extends Fragment {
     private SpinKitView spinner;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+                             final ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -102,7 +105,7 @@ public class HomeFragment extends Fragment {
                     uploadImg.setColorFilter(filter);
                     homeViewModel.sendImageDataToServer(getContext(), uploadImg.getDrawable(), new SendImageDataCallback(){
                         @Override
-                        public void OnSuccess() {
+                        public void OnSuccess(String response) {
                             uploadImg.setImageDrawable(null);
 
                             instructionsTxt.setVisibility(View.VISIBLE);
@@ -110,6 +113,17 @@ public class HomeFragment extends Fragment {
                             Toast.makeText(getActivity(), "Data Processed successfully, please check your email!", Toast.LENGTH_LONG).show();
 
                             spinner.setVisibility(View.GONE);
+
+                            try {
+                                JSONObject responseObj = new JSONObject(response);
+
+                                homeViewModel.createNotificationChannel(getActivity());
+                                DataProvider.returnedImage = responseObj.getString("image");
+                                homeViewModel.sendNotification(getActivity());
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         @Override

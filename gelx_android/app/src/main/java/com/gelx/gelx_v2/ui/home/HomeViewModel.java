@@ -1,22 +1,36 @@
 package com.gelx.gelx_v2.ui.home;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Base64;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.ViewModel;
 
+import com.gelx.gelx_v2.MainActivity;
 import com.gelx.gelx_v2.PermanentStorage;
+import com.gelx.gelx_v2.R;
+import com.gelx.gelx_v2.callbacks.CreateUserCallback;
 import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
 import com.gelx.gelx_v2.models.ImageData;
 import com.gelx.gelx_v2.models.LadderData;
 import com.gelx.gelx_v2.reposotories.DataProvider;
+import com.gelx.gelx_v2.ui.ImageResultActivity;
 import com.gelx.gelx_v2.ui.dashboard.DashboardViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.gson.internal.$Gson$Preconditions;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -25,13 +39,13 @@ import java.util.Random;
 
 public class HomeViewModel extends ViewModel {
 
-    public void sendUserRegistrationToServer(Context context, String string, SendImageDataCallback sendImageDataCallback) throws UnsupportedEncodingException{
+    public void sendUserRegistrationToServer(Context context, String string, CreateUserCallback createUserCallback) throws UnsupportedEncodingException{
         ImageData imageData = new ImageData();
         imageData.setUsername(PermanentStorage.GOOGLE_GIVEN_NAME_KEY);
         imageData.setPassword(PermanentStorage.PASSWORD_KEY);
 
 
-        DataProvider.sendUserRegistrationToServer(context, imageData, sendImageDataCallback);
+        DataProvider.sendUserRegistrationToServer(context, imageData, createUserCallback);
     }
 
     public void sendImageDataToServer(Context context, Drawable drawable, SendImageDataCallback sendImageDataCallback) throws UnsupportedEncodingException {
@@ -85,5 +99,60 @@ public class HomeViewModel extends ViewModel {
         imageData.setLadderData(ladders);
 
         DataProvider.sendImageDataToServer(context, imageData, sendImageDataCallback);
+    }
+
+
+
+    protected void sendNotification(Context context) {
+
+        int notificationID = 101;
+
+        String channelID = "com.gelx.gelx_v2";
+
+
+        Intent resultIntent = new Intent(context, ImageResultActivity.class);
+
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(
+                        context,
+                        0,
+                        resultIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+
+        Notification notification =
+                new Notification.Builder(context,
+                        channelID)
+                        .setContentTitle("New Message")
+                        .setContentText("You've received new messages.")
+                        .setSmallIcon(android.R.drawable.ic_dialog_info)
+                        .setChannelId(channelID)
+                        .setContentIntent(pendingIntent)
+                        .build();
+
+        NotificationManager notificationManager = (NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(notificationID, notification);
+    }
+
+
+    protected void createNotificationChannel(Context context) {
+
+
+        NotificationManager notificationManager = (NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        NotificationChannel channel =
+                new NotificationChannel("com.gelx.gelx_v2", "GELX Channel", importance);
+
+        channel.setDescription("image returned notification");
+        channel.enableLights(true);
+        channel.setLightColor(Color.RED);
+        channel.enableVibration(true);
+        channel.setVibrationPattern(
+                new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+        notificationManager.createNotificationChannel(channel);
     }
 }

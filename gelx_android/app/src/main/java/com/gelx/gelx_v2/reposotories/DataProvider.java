@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.gelx.gelx_v2.PermanentStorage;
+import com.gelx.gelx_v2.callbacks.CreateUserCallback;
 import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
 import com.gelx.gelx_v2.models.ImageData;
 import com.gelx.gelx_v2.models.LadderData;
@@ -47,6 +48,8 @@ public class DataProvider {
         xyDataList.clear();
     }
 
+    public static String returnedImage = "";
+
     public static boolean addData(XY xy) {
         if (xyDataList.size() < 10) {
 
@@ -60,7 +63,7 @@ public class DataProvider {
     }
 
 
-    public static void sendUserRegistrationToServer(final Context context, final ImageData imageData, final SendImageDataCallback sendImageDataCallback){
+    public static void sendUserRegistrationToServer(final Context context, final ImageData imageData, final CreateUserCallback createUserCallback){
 
         final String userKey = PermanentStorage.getInstance().retrieveString(context, PermanentStorage.GOOGLE_GIVEN_NAME_KEY);
         Log.i("userkey", userKey);
@@ -88,7 +91,7 @@ public class DataProvider {
                     @Override
                     public void onResponse(String response) {
                         clearDataList();
-                        sendImageDataCallback.OnSuccess();
+                        createUserCallback.OnSuccess();
                         Log.i("User Created", response);
 
                         try {
@@ -103,7 +106,7 @@ public class DataProvider {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                sendImageDataCallback.OnFailure();
+                createUserCallback.OnFailure();
                 Log.e("User Created", "error: " + error.getMessage());
             }
         }) {
@@ -148,7 +151,7 @@ public class DataProvider {
                     @Override
                     public void onResponse(String response) {
                         clearDataList();
-                        sendImageDataCallback.OnSuccess();
+                        sendImageDataCallback.OnSuccess(response);
                         Log.i("Image Sent", response);
 
                     }

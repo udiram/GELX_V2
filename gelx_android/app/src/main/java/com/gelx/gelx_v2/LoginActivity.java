@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.gelx.gelx_v2.callbacks.CreateUserCallback;
 import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
 import com.gelx.gelx_v2.models.ImageData;
 import com.gelx.gelx_v2.reposotories.DataProvider;
@@ -99,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
             imageData.setUsername(account.getGivenName());
             imageData.setPassword(account.getFamilyName());
             // Signed in successfully, show authenticated UI.
-            DataProvider.sendUserRegistrationToServer(LoginActivity.this, imageData, new SendImageDataCallback() {
+            DataProvider.sendUserRegistrationToServer(LoginActivity.this, imageData, new CreateUserCallback() {
                 @Override
                 public void OnSuccess() {
                     updateUI(account);

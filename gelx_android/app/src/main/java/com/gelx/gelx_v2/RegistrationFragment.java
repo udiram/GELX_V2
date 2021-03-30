@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.gelx.gelx_v2.callbacks.CreateUserCallback;
 import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
 import com.gelx.gelx_v2.reposotories.DataProvider;
 import com.gelx.gelx_v2.ui.home.HomeViewModel;
@@ -124,7 +125,7 @@ public class RegistrationFragment extends Fragment {
                     startActivity(report);
 
                     try {
-                        homeViewModel.sendUserRegistrationToServer(getActivity(), PermanentStorage.GOOGLE_GIVEN_NAME_KEY, new SendImageDataCallback() {
+                        homeViewModel.sendUserRegistrationToServer(getActivity(), PermanentStorage.GOOGLE_GIVEN_NAME_KEY, new CreateUserCallback() {
                             @Override
                             public void OnSuccess() {
 
