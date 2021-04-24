@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.gelx.gelx_v2.PermanentStorage;
 import com.gelx.gelx_v2.R;
 import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
 import com.gelx.gelx_v2.models.XY;
@@ -118,7 +119,7 @@ public class HomeFragment extends Fragment {
                                 JSONObject responseObj = new JSONObject(response);
 
                                 homeViewModel.createNotificationChannel(getActivity());
-                                DataProvider.returnedImage = responseObj.getString("image");
+                                PermanentStorage.getInstance().storeString(getActivity(), PermanentStorage.RETURN_IMAGE_KEY, responseObj.getString("image"));
                                 homeViewModel.sendNotification(getActivity());
 
                             } catch (JSONException e) {

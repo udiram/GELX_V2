@@ -48,8 +48,6 @@ public class DataProvider {
         xyDataList.clear();
     }
 
-    public static String returnedImage = "";
-
     public static boolean addData(XY xy) {
         if (xyDataList.size() < 10) {
 

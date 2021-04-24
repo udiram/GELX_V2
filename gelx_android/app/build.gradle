@@ -22,6 +22,9 @@ android {
     }
 }
 
+repositories {
+}
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
