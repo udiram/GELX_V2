@@ -3,6 +3,7 @@ package com.gelx.gelx_v2.ui.home;
 import android.content.Intent;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -25,6 +26,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.gelx.gelx_v2.PermanentStorage;
 import com.gelx.gelx_v2.R;
 import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
+import com.gelx.gelx_v2.models.LaneData;
 import com.gelx.gelx_v2.models.XY;
 import com.gelx.gelx_v2.reposotories.DataProvider;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
@@ -32,11 +34,16 @@ import com.github.chrisbanes.photoview.PhotoView;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class HomeFragment extends Fragment {
     private static final int RESULT_LOAD_IMAGE = 9703;
@@ -117,6 +124,14 @@ public class HomeFragment extends Fragment {
 
                             try {
                                 JSONObject responseObj = new JSONObject(response);
+
+                                Type userListType = new TypeToken<ArrayList<LaneData>>(){}.getType();
+
+                                ArrayList<LaneData> laneData = new Gson().fromJson(String.valueOf(responseObj.getJSONArray("laneData")), userListType);
+
+                                for (LaneData lane : laneData) {
+                                    Log.i("lane", String.valueOf(lane.getColumn()));
+                                }
 
                                 homeViewModel.createNotificationChannel(getActivity());
                                 PermanentStorage.getInstance().storeString(getActivity(), PermanentStorage.RETURN_IMAGE_KEY, responseObj.getString("image"));

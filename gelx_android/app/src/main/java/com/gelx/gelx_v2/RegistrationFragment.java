@@ -129,7 +129,7 @@ public class RegistrationFragment extends Fragment {
                             @Override
                             public void OnSuccess() {
 
-                                PermanentStorage.getInstance().storeString(getActivity(), PermanentStorage.ERROR_KEY, String.valueOf(PermanentStorage.ERROR_KEY.equals(null)));
+                                //PermanentStorage.getInstance().storeString(getActivity(), PermanentStorage.ERROR_KEY, String.valueOf(PermanentStorage.ERROR_KEY.equals(null)));
                                 Toast.makeText(getActivity(), "Account Created successfully, please check your email!", Toast.LENGTH_LONG).show();
 
                             }
