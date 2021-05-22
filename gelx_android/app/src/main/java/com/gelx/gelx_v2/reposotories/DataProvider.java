@@ -16,13 +16,16 @@ import com.gelx.gelx_v2.callbacks.CreateUserCallback;
 import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
 import com.gelx.gelx_v2.models.ImageData;
 import com.gelx.gelx_v2.models.LadderData;
+import com.gelx.gelx_v2.models.LaneData;
 import com.gelx.gelx_v2.models.XY;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +42,8 @@ public class DataProvider {
 
     private static List<XY> xyDataList = new ArrayList<>();
     private static String user = new String();
+
+    public static List<LaneData> laneData;
 
     public static List<XY> getXyDataList() {
         return xyDataList;
@@ -58,6 +63,35 @@ public class DataProvider {
         } else {
             return false;
         }
+    }
+
+    public static void parseSaveLaneData(Context context, String laneDataString) {
+        Type userListType = new TypeToken<ArrayList<LaneData>>(){}.getType();
+        ArrayList<LaneData> laneData = new Gson().fromJson(laneDataString, userListType);
+
+        DataProvider.laneData = laneData;
+
+        PermanentStorage.getInstance().storeString(context, PermanentStorage.LANE_DATA_KEY, laneDataString);
+    }
+
+    public static List<LaneData> getLaneData(Context context) {
+        if (laneData != null) {
+            return laneData;
+        }
+
+        String savedLaneData = PermanentStorage.getInstance().retrieveString(context, PermanentStorage.LANE_DATA_KEY);
+
+        if (savedLaneData != null && !savedLaneData.isEmpty()) {
+            Type userListType = new TypeToken<ArrayList<LaneData>>(){}.getType();
+            ArrayList<LaneData> laneData = new Gson().fromJson(savedLaneData, userListType);
+
+            DataProvider.laneData = laneData;
+
+            return DataProvider.laneData;
+        }
+
+        return new ArrayList<LaneData>();
+
     }
 
 

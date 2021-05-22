@@ -8,18 +8,18 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.gelx.gelx_v2.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.gelx.gelx_v2.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_inputs"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.gelx.gelx_v2.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_insights"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

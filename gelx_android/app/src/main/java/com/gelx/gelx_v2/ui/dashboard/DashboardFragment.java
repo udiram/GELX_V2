@@ -1,5 +1,6 @@
 package com.gelx.gelx_v2.ui.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gelx.gelx_v2.ListActivity;
 import com.gelx.gelx_v2.R;
 import com.gelx.gelx_v2.callbacks.SaveLadderDataCallback;
 import com.gelx.gelx_v2.models.LadderData;
@@ -72,13 +74,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        Button sendLadderBtn = root.findViewById(R.id.sendLadderBtn);
-        sendLadderBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "BTN pressed", Toast.LENGTH_LONG).show();
-            }
-        });
+
 
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
 

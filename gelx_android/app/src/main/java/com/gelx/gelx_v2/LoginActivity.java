@@ -4,14 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.gelx.gelx_v2.callbacks.CreateUserCallback;
-import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
 import com.gelx.gelx_v2.models.ImageData;
 import com.gelx.gelx_v2.reposotories.DataProvider;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;

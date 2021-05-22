@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
@@ -25,8 +24,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.gelx.gelx_v2.callbacks.CreateUserCallback;
-import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
-import com.gelx.gelx_v2.reposotories.DataProvider;
 import com.gelx.gelx_v2.ui.home.HomeViewModel;
 
 import java.io.UnsupportedEncodingException;

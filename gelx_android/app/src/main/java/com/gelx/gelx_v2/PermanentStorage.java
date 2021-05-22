@@ -21,6 +21,7 @@ public class PermanentStorage {
     public static final String ERROR_KEY = "ERROR_KEY";
     public static final String LADDER_KEY = "LADDER_KEY";
     public static final String RETURN_IMAGE_KEY = "RETURN_IMAGE_KEY";
+    public static final String LANE_DATA_KEY = "LANE_DATA";
 
 
 

@@ -125,13 +125,7 @@ public class HomeFragment extends Fragment {
                             try {
                                 JSONObject responseObj = new JSONObject(response);
 
-                                Type userListType = new TypeToken<ArrayList<LaneData>>(){}.getType();
-
-                                ArrayList<LaneData> laneData = new Gson().fromJson(String.valueOf(responseObj.getJSONArray("laneData")), userListType);
-
-                                for (LaneData lane : laneData) {
-                                    Log.i("lane", String.valueOf(lane.getColumn()));
-                                }
+                                DataProvider.parseSaveLaneData(getActivity(), responseObj.getJSONArray("laneData").toString());
 
                                 homeViewModel.createNotificationChannel(getActivity());
                                 PermanentStorage.getInstance().storeString(getActivity(), PermanentStorage.RETURN_IMAGE_KEY, responseObj.getString("image"));

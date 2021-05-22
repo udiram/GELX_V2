@@ -9,8 +9,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
-
 public class ManualRegistrationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

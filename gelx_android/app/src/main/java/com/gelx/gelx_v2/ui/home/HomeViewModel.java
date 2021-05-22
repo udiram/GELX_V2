@@ -11,16 +11,11 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.util.Base64;
 
-import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.ViewModel;
 
-import com.gelx.gelx_v2.MainActivity;
 import com.gelx.gelx_v2.PermanentStorage;
-import com.gelx.gelx_v2.R;
 import com.gelx.gelx_v2.callbacks.CreateUserCallback;
 import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
 import com.gelx.gelx_v2.models.ImageData;
@@ -30,7 +25,6 @@ import com.gelx.gelx_v2.ui.ImageResultActivity;
 import com.gelx.gelx_v2.ui.dashboard.DashboardViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.gson.internal.$Gson$Preconditions;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;

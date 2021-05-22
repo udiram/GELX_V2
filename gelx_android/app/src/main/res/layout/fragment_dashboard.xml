@@ -57,18 +57,71 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"></androidx.recyclerview.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/sendLadderBtn"
-        android:background="@drawable/round_buttons"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/instructions"
+        android:layout_width="346dp"
         android:layout_height="wrap_content"
-        android:text="Send Ladder Data!"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="28dp"
+        android:gravity="center_horizontal"
+        android:text="Enter Ladder values from largest to smallest values, from the right most ladder to the left"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:translationZ="-1dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintEnd_toEndOf="@+id/nav_host_fragment"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.878" />
+        app:layout_constraintVertical_bias="0.617" />
+
+    <TextView
+        android:id="@+id/addinstructions"
+        android:layout_width="182dp"
+        android:layout_height="28dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="212dp"
+        android:gravity="center_horizontal"
+        android:text="add another ladder"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:translationZ="-1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/nav_host_fragment"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.792" />
+
+    <TextView
+        android:id="@+id/removeinstructions"
+        android:layout_width="142dp"
+        android:layout_height="28dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="4dp"
+        android:gravity="center_horizontal"
+        android:text="remove ladder"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:translationZ="-1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/nav_host_fragment"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.792" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
