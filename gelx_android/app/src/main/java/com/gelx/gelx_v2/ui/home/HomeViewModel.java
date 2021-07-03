@@ -42,7 +42,7 @@ public class HomeViewModel extends ViewModel {
         DataProvider.sendUserRegistrationToServer(context, imageData, createUserCallback);
     }
 
-    public void sendImageDataToServer(Context context, Drawable drawable, SendImageDataCallback sendImageDataCallback) throws UnsupportedEncodingException {
+    public void sendImageDataToServer(Context context, Drawable drawable, boolean isZeroCalibration, SendImageDataCallback sendImageDataCallback) throws UnsupportedEncodingException {
 
         if(DataProvider.getXyDataList().isEmpty()){
             sendImageDataCallback.OnEmptyData();
@@ -63,6 +63,7 @@ public class HomeViewModel extends ViewModel {
         ImageData imageData = new ImageData();
         imageData.setJob_id(job_id);
         imageData.setImage(imageString);
+        imageData.setZeroCalibration(isZeroCalibration);
 
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(context);

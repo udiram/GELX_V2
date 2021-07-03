@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="afca621b-806e-463e-b4b2-cbba0051d9fd" name="Default Changelist" comment="" />
+    <list default="true" id="afca621b-806e-463e-b4b2-cbba0051d9fd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/GELX_V2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GELX_V2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gelx_android/app/src/main/java/com/gelx/gelx_v2/models/LaneData.java" beforeDir="false" afterPath="$PROJECT_DIR$/gelx_android/app/src/main/java/com/gelx/gelx_v2/models/LaneData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gelx_android/app/src/main/java/com/gelx/gelx_v2/ui/home/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/gelx_android/app/src/main/java/com/gelx/gelx_v2/ui/home/HomeFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gelx_android/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gelx_android/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

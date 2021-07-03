@@ -13,8 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +56,7 @@ public class HomeFragment extends Fragment {
     private Button sendDataBtn;
     private TextView instructionsTxt;
     private SpinKitView spinner;
+    private Switch zerocb;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
@@ -73,10 +77,13 @@ public class HomeFragment extends Fragment {
 
             }
         });
+        zerocb = root.findViewById(R.id.zerocbSwitch);
         sendDataBtn = root.findViewById(R.id.sendDataBtn);
         spinner = root.findViewById(R.id.spinner);
         spinner.setVisibility(View.GONE);
         sendDataBtn.setVisibility(View.GONE);
+        zerocb.setVisibility(View.GONE);
+
         instructionsTxt = root.findViewById(R.id.instructions);
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +106,18 @@ public class HomeFragment extends Fragment {
 //                Toast.makeText(getContext(), "please click on your ladders, from right to left, followed by your column of interest", Toast.LENGTH_LONG).show();
             }
         });
+        zerocb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    Toast.makeText(getActivity(), "toggled on", Toast.LENGTH_SHORT).show();
 
+                }else{
+                    Toast.makeText(getActivity(), "toggled off", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
         sendDataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,7 +129,7 @@ public class HomeFragment extends Fragment {
                     ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
 
                     uploadImg.setColorFilter(filter);
-                    homeViewModel.sendImageDataToServer(getContext(), uploadImg.getDrawable(), new SendImageDataCallback(){
+                    homeViewModel.sendImageDataToServer(getContext(), uploadImg.getDrawable(), zerocb.isChecked(), new SendImageDataCallback(){
                         @Override
                         public void OnSuccess(String response) {
                             uploadImg.setImageDrawable(null);
@@ -188,6 +206,7 @@ public class HomeFragment extends Fragment {
                     });
             snackbar.show();
             sendDataBtn.setVisibility(View.VISIBLE);
+            zerocb.setVisibility(View.VISIBLE);
             instructionsTxt.setVisibility(View.GONE);
         }
     }

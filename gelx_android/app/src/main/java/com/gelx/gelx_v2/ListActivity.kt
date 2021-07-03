@@ -53,7 +53,7 @@ class ListActivity : AppCompatActivity() {
         }
 
         for (lane in laneData) {
-            list.add("Column number: " .plus(lane.column.toString()) .plus(" \nPeak Values: ") .plus(lane.data))
+            list.add("Column number: " .plus(lane.column.toString()) .plus(" \nPeak Values: ") .plus(lane.dataAsInts))
         }
         return list
     }
@@ -61,26 +61,7 @@ class ListActivity : AppCompatActivity() {
     // This function just creates a list of names for us
     private fun getListOfNames(): MutableList<String> {
         val nameList = mutableListOf<String>()
-        nameList.add("Ali")
-        nameList.add("Sophia")
-        nameList.add("Isabella")
-        nameList.add("Mason")
-        nameList.add("Jacob")
-        nameList.add("William")
-        nameList.add("Olivia")
-        nameList.add("Jayden")
-        nameList.add("Chloe")
-        nameList.add("Ella")
-        nameList.add("Anthony")
-        nameList.add("Joshua")
-        nameList.add("James")
-        nameList.add("Grace")
-        nameList.add("Samantha")
-        nameList.add("Nicholas")
-        nameList.add("Brianna")
-        nameList.add("Justin")
-        nameList.add("Lauren")
-        nameList.add("Kimberly")
+
 
         return nameList
     }

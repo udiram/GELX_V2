@@ -1,7 +1,5 @@
 package com.gelx.gelx_v2.models;
 
-import androidx.annotation.VisibleForTesting;
-
 import java.util.List;
 
 public class ImageData {
@@ -16,6 +14,16 @@ public class ImageData {
     private String user_id;
     private String password;
     private List<LadderData> ladderData;
+    private boolean zeroCalibration;
+
+
+    public boolean isZeroCalibration() {
+        return zeroCalibration;
+    }
+
+    public void setZeroCalibration(boolean zeroCalibration) {
+        this.zeroCalibration = zeroCalibration;
+    }
 
 
     public List<LadderData> getLadderData() {

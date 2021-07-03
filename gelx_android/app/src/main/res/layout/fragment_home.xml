@@ -26,34 +26,35 @@
 
     <Button
         android:id="@+id/sendDataBtn"
-        android:layout_width="190dp"
+        android:layout_width="129dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="0dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="0dp"
         android:layout_marginBottom="65dp"
         android:background="@drawable/round_buttons"
         android:text="Send Data for analysis!" />
 
+
     <Button
         android:id="@+id/uploadBtn"
-        android:layout_width="202dp"
+        android:layout_width="122dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="65dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="67dp"
         android:background="@drawable/round_buttons"
         android:text="Select image for upload" />
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="match_parent"
-        android:layout_height="411dp"
-        android:translationZ="-15dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="118dp"
-        android:src="@drawable/logo" />
+<!--    <ImageView-->
+<!--        android:id="@+id/logo"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="411dp"-->
+<!--        android:translationZ="-15dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginBottom="118dp"-->
+<!--        android:src="@drawable/logo" />-->
 
     <TextView
         android:id="@+id/instructions"
@@ -62,11 +63,10 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
         android:text="Tap the Upload Image below button to get started!"
         android:textSize="25dp"
-        android:gravity="center_horizontal"
         android:textStyle="bold"
         android:translationZ="-1dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -75,4 +75,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Switch
+        android:id="@+id/zerocbSwitch"
+        android:layout_width="154dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="127dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginEnd="130dp"
+        android:layout_marginBottom="80dp"
+        android:checked="false"
+        android:switchMinWidth="56dp"
+        android:text="Use Zero Calibration?"
+        android:textOff="NO"
+        android:textOn="ON"
+        android:translationZ="-50dp" />
 </RelativeLayout>
