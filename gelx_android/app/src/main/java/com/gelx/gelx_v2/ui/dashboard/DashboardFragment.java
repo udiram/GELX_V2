@@ -1,12 +1,9 @@
 package com.gelx.gelx_v2.ui.dashboard;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,13 +11,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gelx.gelx_v2.ListActivity;
 import com.gelx.gelx_v2.R;
 import com.gelx.gelx_v2.callbacks.SaveLadderDataCallback;
 import com.gelx.gelx_v2.models.LadderData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DashboardFragment extends Fragment {

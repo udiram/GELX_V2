@@ -110,10 +110,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    Toast.makeText(getActivity(), "toggled on", Toast.LENGTH_SHORT).show();
 
                 }else{
-                    Toast.makeText(getActivity(), "toggled off", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -144,6 +142,9 @@ public class HomeFragment extends Fragment {
                                 JSONObject responseObj = new JSONObject(response);
 
                                 DataProvider.parseSaveLaneData(getActivity(), responseObj.getJSONArray("laneData").toString());
+
+                                DataProvider.parseSaveNucVals(getActivity(), responseObj.getJSONArray("nucValMap").toString());
+
 
                                 homeViewModel.createNotificationChannel(getActivity());
                                 PermanentStorage.getInstance().storeString(getActivity(), PermanentStorage.RETURN_IMAGE_KEY, responseObj.getString("image"));

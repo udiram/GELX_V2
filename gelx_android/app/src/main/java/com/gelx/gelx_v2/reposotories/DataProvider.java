@@ -17,6 +17,7 @@ import com.gelx.gelx_v2.callbacks.SendImageDataCallback;
 import com.gelx.gelx_v2.models.ImageData;
 import com.gelx.gelx_v2.models.LadderData;
 import com.gelx.gelx_v2.models.LaneData;
+import com.gelx.gelx_v2.models.NucData;
 import com.gelx.gelx_v2.models.XY;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -44,6 +45,7 @@ public class DataProvider {
     private static String user = new String();
 
     public static List<LaneData> laneData;
+    private static ArrayList<NucData> nucData;
 
     public static List<XY> getXyDataList() {
         return xyDataList;
@@ -93,6 +95,27 @@ public class DataProvider {
         return new ArrayList<LaneData>();
 
     }
+
+    public static List<NucData> getNucData(Context context) {
+        if (nucData != null) {
+            return nucData;
+        }
+
+        String savedNucData = PermanentStorage.getInstance().retrieveString(context, PermanentStorage.NUC_VALS_KEY);
+
+        if (savedNucData != null && !savedNucData.isEmpty()) {
+            Type userListType = new TypeToken<ArrayList<NucData>>(){}.getType();
+            ArrayList<NucData> nucData = new Gson().fromJson(savedNucData, userListType);
+
+            DataProvider.nucData = nucData;
+
+            return DataProvider.nucData;
+        }
+
+        return new ArrayList<NucData>();
+
+    }
+
 
 
     public static void sendUserRegistrationToServer(final Context context, final ImageData imageData, final CreateUserCallback createUserCallback){
@@ -216,6 +239,14 @@ public class DataProvider {
 
     }
 
+    public static void parseSaveNucVals(Context context, String nucValsString){
+        Type userListType = new TypeToken<ArrayList<NucData>>(){}.getType();
+        ArrayList<NucData> nucData = new Gson().fromJson(nucValsString, userListType);
+
+        DataProvider.nucData = nucData;
+
+        PermanentStorage.getInstance().storeString(context, PermanentStorage.NUC_VALS_KEY, nucValsString);
+    }
 
 
 //    public static void sendDataToServer(Context context) {

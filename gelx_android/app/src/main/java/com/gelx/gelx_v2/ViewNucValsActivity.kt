@@ -10,7 +10,7 @@ import com.gelx.gelx_v2.NameAdapter
 import com.gelx.gelx_v2.reposotories.DataProvider
 import java.util.*
 
-class ListActivity : AppCompatActivity() {
+class ViewNucValsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +23,7 @@ class ListActivity : AppCompatActivity() {
         rclNames.setHasFixedSize(true)
 
         // Creating an instance of our NameAdapter class and setting it to our RecyclerView
-        val nameList = getLaneData()
+        val nameList = getNucData()
         val namesAdapter = NameAdapter(nameList)
         rclNames.adapter = namesAdapter
         // Setting our RecyclerView's layout manager equal to LinearLayoutManager
@@ -43,17 +43,17 @@ class ListActivity : AppCompatActivity() {
 
     }
 
-    private fun getLaneData() : MutableList<String> {
+    private fun getNucData() : MutableList<String> {
 
-        val laneData = DataProvider.getLaneData(this)
+        val nucData = DataProvider.getNucData(this)
         val list = mutableListOf<String>()
 
-        if (laneData == null || laneData.isEmpty()) {
+        if (nucData == null || nucData.isEmpty()) {
             return ArrayList()
         }
 
-        for (lane in laneData) {
-            list.add("Column number: " .plus(lane.column.toString()) .plus(" \nPeak Values: ") .plus(lane.dataAsInts))
+        for (lane in nucData) {
+            list.add("Column number: " .plus(lane.column.toString()) .plus(" \n Peak Values: ") .plus(lane.data))
         }
         return list
     }

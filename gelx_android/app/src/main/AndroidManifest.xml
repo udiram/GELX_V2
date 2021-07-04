@@ -27,7 +27,7 @@
             android:label="@string/app_name"></activity>
         <activity android:name=".ManualRegistrationActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".ListActivity" />
+        <activity android:name=".ViewNucValsActivity" />
 
     </application>
 
