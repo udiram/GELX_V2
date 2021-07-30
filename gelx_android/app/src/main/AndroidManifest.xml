@@ -7,6 +7,9 @@
 
 
     <application
+
+
+
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
@@ -28,6 +31,19 @@
         <activity android:name=".ManualRegistrationActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ViewNucValsActivity" />
+
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.homefolder.example.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <!-- ressource file to create -->
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths">
+            </meta-data>
+        </provider>
 
     </application>
 

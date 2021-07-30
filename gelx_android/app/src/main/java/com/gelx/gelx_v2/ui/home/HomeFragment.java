@@ -141,7 +141,7 @@ public class HomeFragment extends Fragment {
                             try {
                                 JSONObject responseObj = new JSONObject(response);
 
-                                DataProvider.parseSaveLaneData(getActivity(), responseObj.getJSONArray("laneData").toString());
+                                DataProvider.parseSaveLaneData(getActivity(), responseObj.getJSONObject("laneData").toString());
 
                                 DataProvider.parseSaveNucVals(getActivity(), responseObj.getJSONArray("nucValMap").toString());
 
