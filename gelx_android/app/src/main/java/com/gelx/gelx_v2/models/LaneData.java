@@ -6,7 +6,7 @@ import java.util.List;
 public class LaneData {
 
     private int column;
-    private List<Float> data;
+    private List<Integer> data;
 
     public int getColumn() {
         return column;
@@ -16,21 +16,22 @@ public class LaneData {
         this.column = column;
     }
 
-    public List<Float> getData() {
+    public List<Integer> getData() {
         return data;
     }
 
     public List<Integer> getDataAsInts() {
 
         List<Integer> integers = new ArrayList<Integer>();
-        for (Float item : data) {
-            integers.add(item.intValue());
+        for (Integer item : data) {
+            if (item > 0)
+                integers.add(item.intValue());
         }
         return integers;
 
     }
 
-    public void setData(List<Float> data) {
+    public void setData(List<Integer> data) {
         this.data = data;
     }
 

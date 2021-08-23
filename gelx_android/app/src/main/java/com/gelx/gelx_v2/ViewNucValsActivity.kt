@@ -53,7 +53,7 @@ class ViewNucValsActivity : AppCompatActivity() {
         }
 
         for (lane in nucData) {
-            list.add("Column number: " .plus(lane.column.toString()) .plus(" \n Peak Values: ") .plus(lane.data))
+            list.add("Column number: " .plus(lane.column.toString()) .plus(" \n Peak Values: ") .plus(lane.dataAsInts))
         }
         return list
     }

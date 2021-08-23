@@ -6,7 +6,7 @@ import java.util.List;
 public class NucData {
 
     private int column;
-    private List<Integer> peak_values;
+    private List<Float> peak_values;
 
     public int getColumn() {
         return column;
@@ -16,12 +16,23 @@ public class NucData {
         this.column = column;
     }
 
-    public List<Integer> getData() {
+    public List<Float> getData() {
         return peak_values;
     }
 
+    public List<Integer> getDataAsInts() {
 
-    public void setData(List<Integer> data) {
+        List<Integer> integers = new ArrayList<Integer>();
+        for (Float item : peak_values) {
+            if (item > 0)
+                integers.add(item.intValue());
+        }
+        return integers;
+
+    }
+
+
+    public void setData(List<Float> data) {
         this.peak_values = data;
     }
 

@@ -1,3 +1,4 @@
+
 package com.gelx.gelx_v2.reposotories;
 
 import android.content.Context;
@@ -29,6 +30,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -68,13 +70,40 @@ public class DataProvider {
     }
 
     public static void parseSaveLaneData(Context context, String laneDataString) {
-        Type userListType = new TypeToken<ArrayList<LaneData>>(){}.getType();
-        ArrayList<LaneData> laneData = new Gson().fromJson(laneDataString, userListType);
+        List<LaneData> laneDataList = new ArrayList<>();
 
-        DataProvider.laneData = laneData;
+        try {
+            JSONObject jsonObject = new JSONObject(laneDataString);
+            Iterator<String> iterator = jsonObject.keys();
+            while (iterator.hasNext()) {
+                String column = iterator.next();
+                LaneData laneData = new LaneData();
+                laneData.setColumn(Integer.valueOf(column));
+                laneData.setData(convert(jsonObject.getJSONArray(column)));
+                laneDataList.add(laneData);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e("Data provider", e.getMessage());
+        }
+
+        DataProvider.laneData = laneDataList;
 
         PermanentStorage.getInstance().storeString(context, PermanentStorage.LANE_DATA_KEY, laneDataString);
     }
+
+    public static ArrayList<Integer> convert(JSONArray jArr)
+    {
+        ArrayList<Integer> list = new ArrayList<>();
+        try {
+            for (int i=0, l=jArr.length(); i<l; i++){
+                list.add((int)jArr.getDouble(i));
+            }
+        } catch (JSONException e) {}
+
+        return list;
+    }
+
 
     public static List<LaneData> getLaneData(Context context) {
         if (laneData != null) {
