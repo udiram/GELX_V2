@@ -77,13 +77,30 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
 
-
+        zerocb = root.findViewById(R.id.zerocbSwitch);
+        sendDataBtn = root.findViewById(R.id.sendDataBtn);
+        spinner = root.findViewById(R.id.spinner);
+        spinner.setVisibility(View.GONE);
+        sendDataBtn.setVisibility(View.GONE);
+        zerocb.setVisibility(View.GONE);
+        instructionsTxt = root.findViewById(R.id.instructions);
         final Button uploadBtn = root.findViewById(R.id.uploadBtn);
         uploadImg = (PhotoView) root.findViewById(R.id.uploadedImageView);
         uploadImg.setOnPhotoTapListener(new OnPhotoTapListener() {
             @Override
             public void onPhotoTap(ImageView view, float x, float y) {
 
+                Snackbar noladder =  Snackbar.make(getView(), "tap on the ladder columns", Snackbar.LENGTH_LONG)
+                        .setAction("CHOOSE NEW POINTS", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                DataProvider.clearDataList();
+                                uploadImg.setImageDrawable(originalImage);
+
+                            }
+                        });
+                noladder.show();
 
                 view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 
@@ -97,7 +114,7 @@ public class HomeFragment extends Fragment {
                 Canvas canvas = new Canvas(mutableBitmap);
                 Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
                 paint.setColor(Color.RED);
-                canvas.drawCircle(x*width, y*height, 10, paint);
+                canvas.drawCircle(x*width, y*height, 25, paint);
                 uploadImg.setImageBitmap(mutableBitmap);
 
                 Log.i(TAG, x + "::" + y);
@@ -106,16 +123,10 @@ public class HomeFragment extends Fragment {
                 data.y = y;
                 DataProvider.addData(data);
 
+
             }
         });
-        zerocb = root.findViewById(R.id.zerocbSwitch);
-        sendDataBtn = root.findViewById(R.id.sendDataBtn);
-        spinner = root.findViewById(R.id.spinner);
-        spinner.setVisibility(View.GONE);
-        sendDataBtn.setVisibility(View.GONE);
-        zerocb.setVisibility(View.GONE);
 
-        instructionsTxt = root.findViewById(R.id.instructions);
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -247,8 +258,8 @@ public class HomeFragment extends Fragment {
 
             originalImage = uploadImg.getDrawable();
 
-            Snackbar snackbar =  Snackbar.make(getView(), "please click on your ladders, followed by a column", Snackbar.LENGTH_LONG)
-                    .setAction("UNDO", new View.OnClickListener() {
+            Snackbar snackbar =  Snackbar.make(getView(), "please click on your ladders, followed by a column", Snackbar.LENGTH_SHORT)
+                    .setAction("Choose another picture", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             DataProvider.clearDataList();
