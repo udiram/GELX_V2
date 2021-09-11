@@ -104,8 +104,7 @@ public class RegistrationFragment extends Fragment {
                 }
 
 
-
-                if (name.getText().toString().isEmpty() ||lname.getText().toString().isEmpty() || number.getText().toString().isEmpty() || emailid.getText().toString().isEmpty() || password.getText().toString().isEmpty() || address.getText().toString().isEmpty()) {
+                if (name.getText().toString().isEmpty() || lname.getText().toString().isEmpty() || number.getText().toString().isEmpty() || emailid.getText().toString().isEmpty() || password.getText().toString().isEmpty() || address.getText().toString().isEmpty()) {
                     Toast.makeText(getActivity(), "Please fill in all fields to continue", Toast.LENGTH_LONG).show();
                 } else {
                     PermanentStorage.getInstance().storeString(getActivity(), PermanentStorage.GOOGLE_GIVEN_NAME_KEY, name.getText().toString());
@@ -126,7 +125,6 @@ public class RegistrationFragment extends Fragment {
                             @Override
                             public void OnSuccess() {
 
-                                //PermanentStorage.getInstance().storeString(getActivity(), PermanentStorage.ERROR_KEY, String.valueOf(PermanentStorage.ERROR_KEY.equals(null)));
                                 Toast.makeText(getActivity(), "Account Created successfully, please check your email!", Toast.LENGTH_LONG).show();
 
                             }
@@ -171,22 +169,9 @@ public class RegistrationFragment extends Fragment {
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
+    
+}
 
-    //public static class GenerateRandomString {
-//
-//    private static final String DATA = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-//    private static Random RANDOM = new Random();
-//
-//    private static String randomString(int len) {
-//        StringBuilder sb = new StringBuilder(len);
-//
-//        for (int i = 0; i < len; i++) {
-//            sb.append(DATA.charAt(RANDOM.nextInt(DATA.length())));
-//        }
-//
-//        return sb.toString();
-//    }
 
-    }
 
 

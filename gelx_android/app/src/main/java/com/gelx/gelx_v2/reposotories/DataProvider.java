@@ -37,10 +37,10 @@ import java.util.Map;
 
 public class DataProvider {
 
-    private static final String SEND_IMAGE_URL = "http://10.0.0.104:8000/polls/image/";
-    private static final String SEND_DATA_URL = "http://10.0.0.104:8000/polls/analysis/";
-    private static final String USER_REG_URL = "http://10.0.0.104:8000/polls/user/";
-    private static final String LADDER_DATA_URL = "http://10.0.0.104:8000/polls/ladder/";
+    private static final String SEND_IMAGE_URL = "http://130.113.174.159:8888/polls/image/";
+    private static final String SEND_DATA_URL = "http://130.113.174.159:8888/polls/analysis/";
+    private static final String USER_REG_URL = "http://130.113.174.159:8888/polls/user/";
+    private static final String LADDER_DATA_URL = "http://130.113.174.159:8888/polls/ladder/";
 
 
     private static List<XY> xyDataList = new ArrayList<>();
@@ -73,7 +73,7 @@ public class DataProvider {
         List<LaneData> laneDataList = new ArrayList<>();
 
         try {
-            JSONObject jsonObject = new JSONObject(laneDataString);
+                JSONObject jsonObject = new JSONObject(laneDataString);
             Iterator<String> iterator = jsonObject.keys();
             while (iterator.hasNext()) {
                 String column = iterator.next();

@@ -1,14 +1,23 @@
 package com.gelx.gelx_v2.ui.home;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +34,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import com.gelx.gelx_v2.PermanentStorage;
 import com.gelx.gelx_v2.R;
@@ -57,6 +69,7 @@ public class HomeFragment extends Fragment {
     private TextView instructionsTxt;
     private SpinKitView spinner;
     private Switch zerocb;
+    private Drawable originalImage;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
@@ -64,11 +77,29 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
 
+
         final Button uploadBtn = root.findViewById(R.id.uploadBtn);
         uploadImg = (PhotoView) root.findViewById(R.id.uploadedImageView);
         uploadImg.setOnPhotoTapListener(new OnPhotoTapListener() {
             @Override
             public void onPhotoTap(ImageView view, float x, float y) {
+
+
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+
+                BitmapDrawable drawable = (BitmapDrawable) uploadImg.getDrawable();
+                Bitmap bitmap = drawable.getBitmap();
+
+                Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                int width = mutableBitmap.getWidth();
+                int height = mutableBitmap.getHeight();
+
+                Canvas canvas = new Canvas(mutableBitmap);
+                Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+                paint.setColor(Color.RED);
+                canvas.drawCircle(x*width, y*height, 10, paint);
+                uploadImg.setImageBitmap(mutableBitmap);
+
                 Log.i(TAG, x + "::" + y);
                 XY data = new XY();
                 data.x = x;
@@ -119,41 +150,59 @@ public class HomeFragment extends Fragment {
         sendDataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+              String ladderString = PermanentStorage.getInstance().retrieveString(getActivity(), PermanentStorage.LADDER_KEY);
+                if(ladderString.isEmpty() || ladderString.equals("[]")){
 
-                spinner.setVisibility(View.VISIBLE);
-                try {
-                    ColorMatrix matrix = new ColorMatrix();
-                    matrix.setSaturation(0); // this just makes it look like grayscale
-                    ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+                    Snackbar noladder =  Snackbar.make(getView(), "please set your ladders before sending image", Snackbar.LENGTH_LONG)
+                            .setAction("SET LADDERS", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
 
-                    uploadImg.setColorFilter(filter);
-                    homeViewModel.sendImageDataToServer(getContext(), uploadImg.getDrawable(), zerocb.isChecked(), new SendImageDataCallback(){
-                        @Override
-                        public void OnSuccess(String response) {
-                            uploadImg.setImageDrawable(null);
-
-                            instructionsTxt.setVisibility(View.VISIBLE);
-
-                            Toast.makeText(getActivity(), "Data Processed successfully, please check your email!", Toast.LENGTH_LONG).show();
-
-                            spinner.setVisibility(View.GONE);
-
-                            try {
-                                JSONObject responseObj = new JSONObject(response);
-
-                                DataProvider.parseSaveLaneData(getActivity(), responseObj.getJSONObject("laneData").toString());
-
-                                DataProvider.parseSaveNucVals(getActivity(), responseObj.getJSONArray("nucValMap").toString());
+                                    NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                                    navController.navigate(R.id.navigation_dashboard);
+                                }
+                            });
+                    noladder.show();
 
 
-                                homeViewModel.createNotificationChannel(getActivity());
-                                PermanentStorage.getInstance().storeString(getActivity(), PermanentStorage.RETURN_IMAGE_KEY, responseObj.getString("image"));
-                                homeViewModel.sendNotification(getActivity());
+                 return;
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                }
+                    spinner.setVisibility(View.VISIBLE);
+                    try {
+                        ColorMatrix matrix = new ColorMatrix();
+                        matrix.setSaturation(0); // this just makes it look like grayscale
+                        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+
+                        uploadImg.setColorFilter(filter);
+                        homeViewModel.sendImageDataToServer(getContext(), originalImage, zerocb.isChecked(), new SendImageDataCallback(){
+                            @Override
+                            public void OnSuccess(String response) {
+                                uploadImg.setImageDrawable(null);
+                                originalImage = null;
+
+                                instructionsTxt.setVisibility(View.VISIBLE);
+
+                                Toast.makeText(getActivity(), "Data Processed successfully, please check your email!", Toast.LENGTH_LONG).show();
+
+                                spinner.setVisibility(View.GONE);
+
+                                try {
+                                    JSONObject responseObj = new JSONObject(response);
+
+                                    DataProvider.parseSaveLaneData(getActivity(), responseObj.getJSONObject("laneData").toString());
+
+                                    DataProvider.parseSaveNucVals(getActivity(), responseObj.getJSONArray("nucValMap").toString());
+
+
+                                    homeViewModel.createNotificationChannel(getActivity());
+                                    PermanentStorage.getInstance().storeString(getActivity(), PermanentStorage.RETURN_IMAGE_KEY, responseObj.getString("image"));
+                                    homeViewModel.sendNotification(getActivity());
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        }
 
                         @Override
                         public void OnFailure() {
@@ -195,6 +244,8 @@ public class HomeFragment extends Fragment {
         if (requestCode == RESULT_LOAD_IMAGE) {
             Uri selectedImageUri = data.getData();
             uploadImg.setImageURI(selectedImageUri);
+
+            originalImage = uploadImg.getDrawable();
 
             Snackbar snackbar =  Snackbar.make(getView(), "please click on your ladders, followed by a column", Snackbar.LENGTH_LONG)
                     .setAction("UNDO", new View.OnClickListener() {
