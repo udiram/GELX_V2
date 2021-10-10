@@ -28,7 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -37,10 +37,10 @@ import java.util.Map;
 
 public class DataProvider {
 
-    private static final String SEND_IMAGE_URL = "http://130.113.174.159:8888/polls/image/";
-    private static final String SEND_DATA_URL = "http://130.113.174.159:8888/polls/analysis/";
-    private static final String USER_REG_URL = "http://130.113.174.159:8888/polls/user/";
-    private static final String LADDER_DATA_URL = "http://130.113.174.159:8888/polls/ladder/";
+    private static final String SEND_IMAGE_URL = "http://130.113.174.159:2222/polls/image/";
+    private static final String SEND_DATA_URL = "http://130.113.174.159:2222/polls/analysis/";
+    private static final String USER_REG_URL = "http://130.113.174.159:2222/polls/user/";
+    private static final String LADDER_DATA_URL = "http://130.113.174.159:2222/polls/ladder/";
 
 
     private static List<XY> xyDataList = new ArrayList<>();
