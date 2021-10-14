@@ -70,7 +70,7 @@ public class RegistrationFragment extends Fragment {
         tctext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://synth-med.com"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/synth-med-biotechnology/synthmed_dashboard_server#synthmed_dashboard_server"));
                 startActivity(browserIntent);
 
                 checkboxvariable.setText("");
